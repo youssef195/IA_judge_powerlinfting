@@ -9,5 +9,6 @@ comme dans mon preojet de hand-detection, je me suis inspirer d'une video pour c
 Voici mes source:
 
 https://www.youtube.com/watch?v=5kaX3ta398w&t=2457s
+
 youtube.com/watch?v=06TE_U21FK4
 
