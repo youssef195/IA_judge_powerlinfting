@@ -1,4 +1,4 @@
-# IA_trainer
+# IA_judge_powerlinfting
 j'aime beaucoup le sport et le powerlifting, l'objectif est de crée une IA qui remplace des juges en compétition
 
 l'objectif 1er est toujours l'auto-formation 
