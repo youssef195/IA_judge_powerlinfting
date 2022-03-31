@@ -3,7 +3,7 @@ j'aime beaucoup le sport et le powerlifting, l'objectif est de créer une IA qui
 
 l'objectif 1er est toujours l'autoformation 
 
-comme dans mon projet de hand-détection, je me suis inspiré d'une vidéo pour comprendre le fonctionnement et j'ai essayé de refaire le code sans voire l'original
+comme dans mon projet de hand-détection, je me suis inspiré d'une vidéo pour comprendre le fonctionnement et j'ai essayé de refaire le code sans voir l'original
 
 
 Voici mes sources;
