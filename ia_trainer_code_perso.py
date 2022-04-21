@@ -13,7 +13,7 @@ def calculate_angle(a,b,c):
     radians=np.arctan2(c[1]-b[1], c[0]-b[0])-np.arctan2(a[1]-b[1],a[0]-b[0])
     angle=np.abs(radians*180.0/np.pi)
     
-    if angle >180.0:
+    if angle >170.0:
         angle=360-angle
     return angle
 
@@ -22,7 +22,7 @@ stage=None
 
 
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 ## Setup mediapipe instance
 with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
     while cap.isOpened():
@@ -44,9 +44,9 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
         try:
             landmarks = results.pose_landmarks.landmark
             # Get coordinates
-            shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
-            elbow = [landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
-            wrist = [landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].x,landmarks[mp_pose.PoseLandmark.LEFT_WRIST.value].y]
+            shoulder = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x,landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
+            elbow = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+            wrist = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x,landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
             
             #calculate angle
             angle=calculate_angle(shoulder, elbow, wrist)
@@ -56,24 +56,25 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
                             cv2.FONT_HERSHEY_SIMPLEX,0.5,(255,255,255),2,cv2.LINE_AA)
             
             #counter
-            if angle >= 160:
-                stage="squat"
-            if angle < 160:
-                stage=" no squat"
-                counter+=1
+            if angle >= 70:
+                stage="temps"
+                counter+= 0
+            if angle <= 70:
+                stage=" temps"
+                counter+= 1
+                
                 print(counter)
-                break
+                
+            
         except:
             pass
         #box counter
         cv2.rectangle(image, (0,0), (225,73), (245,117,16), -1)
         
         #rep data
-        cv2.putText(image, 'REPS', (15,12), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), 1, cv2.LINE_AA)
-        cv2.putText(image, str(counter), 
-                    (10,60), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
+        cv2.putText(image, 'temps', (15,120), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255,255,255), 1, cv2.LINE_AA)
+        cv2.putText(image, str(int(counter)),(10,60), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,255,255), 2, cv2.LINE_AA)
         
         # Stage data
         cv2.putText(image, 'STAGE', (65,12), 
@@ -97,6 +98,5 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
         
     cap.release()
     cv2.destroyAllWindows()
-
 
 
